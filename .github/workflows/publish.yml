@@ -20,6 +20,7 @@ jobs:
       - name: Audit packages
         run: npm audit --audit-level=high
   scan:
+    needs: audit
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -34,3 +35,35 @@ jobs:
         run: pip install njsscan
       - name: Scan application
         run: njsscan ./
+  build:
+    needs: scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install quasar
+        run: npm install -g @quasar/cli
+      - name: Install dependencies
+        run: npm install --progress=false
+      - name: Build application
+        run: quasar build -m ssr
+        env:
+          VUE_WEB_NAME: "Virsas"
+          VUE_WEB_TITLE: "Virsas"
+          VUE_WEB_DESCRIPTION: "Virtual systems and services"
+          VUE_WEB_PORT: "3000"
+          VUE_WEB_COLOR: "#05a6f7"
+          VUE_WEB_URL: "https://www.virsas.com"
+          VUE_WEB_ASSETS: "https://assets.virsas.com"
+          VUE_VSSAUTH_APP: "https://auth.virsas.com"
+          VUE_VSSAUTH_API: "https://api.virsas.com/auth"
+      - name: Store artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+          retention-days: 1
