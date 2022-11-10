@@ -50,7 +50,6 @@ jobs:
       - name: Install dependencies
         run: npm install --progress=false
       - name: Build application
-        run: quasar build -m ssr
         env:
           VUE_WEB_NAME: "Virsas"
           VUE_WEB_TITLE: "Virsas"
@@ -61,9 +60,37 @@ jobs:
           VUE_WEB_ASSETS: "https://assets.virsas.com"
           VUE_VSSAUTH_APP: "https://auth.virsas.com"
           VUE_VSSAUTH_API: "https://api.virsas.com/auth"
+        run: quasar build -m ssr
       - name: Store artifacts
         uses: actions/upload-artifact@v3
         with:
           name: dist
           path: dist
           retention-days: 1
+  docker:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Checkout artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ECR_PUBLISH_WEBSITE_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_ECR_PUBLISH_WEBSITE_KEY }}
+          aws-region: ${{ secrets.AWS_ECR_PUBLISH_WEBSITE_REGION }}
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: ECR Image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: virsas_web
+          IMAGE_TAG: latest
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG --all-tags
