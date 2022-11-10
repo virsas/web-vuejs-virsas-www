@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: "3.x"
       - name: Install pip
@@ -77,6 +77,8 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
+      - name: list directory
+        run: ls -1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
