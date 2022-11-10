@@ -9,7 +9,7 @@ RUN cp /usr/share/zoneinfo/UTC /etc/localtime && \
     echo "UTC" >  /etc/timezone
 
 # copy the application
-COPY dist/ssr .
+COPY ssr .
 
 # copy publicly available files
 COPY public/robots.txt www/

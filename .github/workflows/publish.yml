@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist
-          path: dist/
+          path: dist
           retention-days: 1
   docker:
     needs: build
@@ -77,8 +77,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist
-      - name: list directory
-        run: ls -1
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
