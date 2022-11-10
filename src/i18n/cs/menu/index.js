@@ -1,0 +1,20 @@
+export default {
+  global: {},
+  header: {},
+  footer: {
+    virsas: "Virsas s.r.o.",
+    address: "Adresa",
+    street: "U trati 3134/36a",
+    prague: "Praha",
+    czechia: "Česká republika",
+    company_id: "IČ",
+    cid: "24192465",
+    company_vat: "DIČ",
+    dic: "CZ24192465",
+    copyright: "Všechna práva vyhrazena",
+    status: "Stav",
+    terms: "Pravidla a podmínky",
+    privacy: "Zásady ochrany osobních údajů",
+    cookies: "Soubory cookie",
+  },
+};

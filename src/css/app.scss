@@ -1,0 +1,58 @@
+@import url("https://assets.virsas.com/style/common.css");
+
+body.body--light {
+  .q-page {
+    background-color: $light-page;
+    color: $light-page-text;
+    a {
+      color: $light-page-links;
+    }
+  }
+  .q-header {
+    .q-toolbar {
+      background-color: $light-drawer;
+      .q-btn {
+        background-color: $light-page-button;
+        color: $light-page-button-text;
+      }
+    }
+  }
+  .q-footer {
+    background-color: $light-window;
+    color: $light-page-text;
+    .q-btn {
+      color: $light-page-text;
+    }
+  }
+  .cookiesDialog .q-toolbar {
+    background-color: $light-page;
+  }
+}
+body.body--dark {
+  .q-page {
+    background-color: $dark-page;
+    color: $dark-page-text;
+    a {
+      color: $dark-page-links;
+    }
+  }
+  .q-header {
+    .q-toolbar {
+      background-color: $dark-drawer;
+      .q-btn {
+        background-color: $dark-page-button;
+        color: $dark-page-button-text;
+      }
+    }
+  }
+  .q-footer {
+    background-color: $dark-window;
+    color: $dark-page-text;
+    .q-btn {
+      color: $dark-page-text;
+    }
+  }
+  .cookiesDialog .q-toolbar {
+    background-color: $dark-page;
+  }
+}

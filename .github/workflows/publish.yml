@@ -1,0 +1,36 @@
+name: Publish website
+
+on:
+  push:
+    branches:
+      - "main"
+    paths-ignore:
+      - "**.md"
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Audit packages
+        run: npm audit --audit-level=high
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+      - name: Install pip
+        run: python -m pip install --upgrade pip
+      - name: Install njsscan
+        run: pip install njsscan
+      - name: Scan application
+        run: njsscan ./
